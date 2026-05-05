@@ -17,9 +17,7 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
-
   body {
     background: var(--deep);
     font-family: 'Cormorant Garamond', serif;
@@ -28,7 +26,6 @@
     cursor: none;
   }
 
-  /* Custom cursor */
   .cursor {
     width: 20px; height: 20px;
     border: 2px solid var(--gold);
@@ -49,496 +46,96 @@
     transform: translate(-50%, -50%);
   }
 
-  /* Stars background */
-  .stars {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  .star {
-    position: absolute;
-    width: 2px; height: 2px;
-    background: white;
-    border-radius: 50%;
-    animation: twinkle var(--d, 3s) infinite alternate;
-  }
+  .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; pointer-events: none; }
+  .star { position: absolute; width: 2px; height: 2px; background: white; border-radius: 50%; animation: twinkle var(--d, 3s) infinite alternate; }
+  @keyframes twinkle { 0% { opacity: 0.1; transform: scale(1); } 100% { opacity: 1; transform: scale(1.5); } }
 
-  @keyframes twinkle {
-    0% { opacity: 0.1; transform: scale(1); }
-    100% { opacity: 1; transform: scale(1.5); }
-  }
+  .petals-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+  .petal { position: absolute; top: -30px; font-size: 1.2rem; animation: fall var(--fall-d, 6s) linear infinite; opacity: 0.7; }
+  @keyframes fall { 0% { transform: translateY(-30px) rotate(0deg); opacity: 0.8; } 100% { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
 
-  /* Floating petals */
-  .petals-container {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 1;
-  }
-  .petal {
-    position: absolute;
-    top: -30px;
-    font-size: 1.2rem;
-    animation: fall var(--fall-d, 6s) linear infinite;
-    opacity: 0.7;
-  }
-  @keyframes fall {
-    0% { transform: translateY(-30px) rotate(0deg); opacity: 0.8; }
-    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-  }
+  #hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; z-index: 2; padding: 2rem; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, #3d0a4f 0%, #1a0a2e 60%, #0d0618 100%); z-index: -1; }
+  .hero-bg::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 30% 70%, rgba(232,116,138,0.15) 0%, transparent 60%), radial-gradient(circle at 70% 30%, rgba(245,200,66,0.1) 0%, transparent 50%); }
 
-  /* Hero Section */
-  #hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    z-index: 2;
-    padding: 2rem;
-  }
+  .crown-icon { font-size: 3rem; animation: float 3s ease-in-out infinite; margin-bottom: 0.5rem; }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 50% 50%, #3d0a4f 0%, #1a0a2e 60%, #0d0618 100%);
-    z-index: -1;
-  }
-  .hero-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 30% 70%, rgba(232,116,138,0.15) 0%, transparent 60%),
-                radial-gradient(circle at 70% 30%, rgba(245,200,66,0.1) 0%, transparent 50%);
-  }
-
-  .crown-icon {
-    font-size: 3rem;
-    animation: float 3s ease-in-out infinite;
-    margin-bottom: 0.5rem;
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-  }
-
-  .hero-subtitle {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-    letter-spacing: 0.5em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1rem;
-    opacity: 0;
-    animation: fadeUp 1s ease forwards 0.3s;
-  }
-
-  .hero-name {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 10vw, 7rem);
-    font-weight: 900;
-    line-height: 1;
-    background: linear-gradient(135deg, #f5c842 0%, #e8748a 40%, #9b59b6 80%, #f5c842 100%);
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: shimmer 4s linear infinite, fadeUp 1s ease forwards 0.5s;
-    opacity: 0;
-    margin-bottom: 0.3rem;
-  }
-
-  @keyframes shimmer {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 200% 50%; }
-  }
-
-  .hero-lastname {
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(2rem, 6vw, 4rem);
-    color: var(--rose);
-    opacity: 0;
-    animation: fadeUp 1s ease forwards 0.7s;
-    margin-bottom: 2rem;
-  }
-
-  .birthday-badge {
-    display: inline-block;
-    border: 1px solid var(--gold);
-    padding: 0.6rem 2.5rem;
-    font-size: 1.1rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    position: relative;
-    opacity: 0;
-    animation: fadeUp 1s ease forwards 0.9s;
-  }
-  .birthday-badge::before, .birthday-badge::after {
-    content: '✦';
-    position: absolute;
-    top: 50%; transform: translateY(-50%);
-    color: var(--rose);
-  }
+  .hero-subtitle { font-family: 'Cormorant Garamond', serif; font-size: clamp(0.9rem, 2vw, 1.1rem); letter-spacing: 0.5em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; opacity: 0; animation: fadeUp 1s ease forwards 0.3s; }
+  .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 10vw, 7rem); font-weight: 900; line-height: 1; background: linear-gradient(135deg, #f5c842 0%, #e8748a 40%, #9b59b6 80%, #f5c842 100%); background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: shimmer 4s linear infinite, fadeUp 1s ease forwards 0.5s; opacity: 0; margin-bottom: 0.3rem; }
+  @keyframes shimmer { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+  .hero-lastname { font-family: 'Dancing Script', cursive; font-size: clamp(2rem, 6vw, 4rem); color: var(--rose); opacity: 0; animation: fadeUp 1s ease forwards 0.7s; margin-bottom: 2rem; }
+  .birthday-badge { display: inline-block; border: 1px solid var(--gold); padding: 0.6rem 2.5rem; font-size: 1.1rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); position: relative; opacity: 0; animation: fadeUp 1s ease forwards 0.9s; }
+  .birthday-badge::before, .birthday-badge::after { content: '✦'; position: absolute; top: 50%; transform: translateY(-50%); color: var(--rose); }
   .birthday-badge::before { left: 0.7rem; }
   .birthday-badge::after { right: 0.7rem; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.4); font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; animation: pulse 2s ease-in-out infinite; }
+  .scroll-hint span { display: block; text-align: center; font-size: 1.5rem; animation: bounce 1.5s ease-in-out infinite; }
+  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+  @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.9; } }
 
-  .scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    color: rgba(255,255,255,0.4);
-    font-size: 0.8rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    animation: pulse 2s ease-in-out infinite;
-  }
-  .scroll-hint span {
-    display: block;
-    text-align: center;
-    font-size: 1.5rem;
-    animation: bounce 1.5s ease-in-out infinite;
-  }
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(8px); }
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.9; }
-  }
+  #gallery { position: relative; z-index: 2; padding: 5rem 2rem; background: linear-gradient(180deg, #1a0a2e 0%, #0f051e 100%); }
+  .section-title { text-align: center; margin-bottom: 3rem; }
+  .section-title h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-style: italic; color: var(--white); }
+  .section-title .line { width: 100px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1rem auto; }
+  .section-title p { color: rgba(255,255,255,0.5); font-size: 0.9rem; letter-spacing: 0.3em; text-transform: uppercase; }
 
-  /* Photo Gallery */
-  #gallery {
-    position: relative;
-    z-index: 2;
-    padding: 5rem 2rem;
-    background: linear-gradient(180deg, #1a0a2e 0%, #0f051e 100%);
-  }
-
-  .section-title {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-  .section-title h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-style: italic;
-    color: var(--white);
-  }
-  .section-title .line {
-    width: 100px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 1rem auto;
-  }
-  .section-title p {
-    color: rgba(255,255,255,0.5);
-    font-size: 0.9rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-  }
-
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .photo-card {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    aspect-ratio: 3/4;
-    cursor: pointer;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    border: 1px solid rgba(245,200,66,0.2);
-  }
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
+  .photo-card { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 3/4; cursor: pointer; transition: transform 0.4s ease, box-shadow 0.4s ease; border: 1px solid rgba(245,200,66,0.2); }
   .photo-card:nth-child(1) { grid-column: span 2; aspect-ratio: 16/10; }
   .photo-card:nth-child(4) { grid-row: span 2; aspect-ratio: auto; }
-  .photo-card:hover {
-    transform: scale(1.03) translateY(-5px);
-    box-shadow: 0 20px 60px rgba(232,116,138,0.3);
-    border-color: rgba(245,200,66,0.6);
-  }
-  .photo-card img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    transition: transform 0.6s ease;
-  }
+  .photo-card:hover { transform: scale(1.03) translateY(-5px); box-shadow: 0 20px 60px rgba(232,116,138,0.3); border-color: rgba(245,200,66,0.6); }
+  .photo-card img { width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform 0.6s ease; }
   .photo-card:hover img { transform: scale(1.08); }
-  .photo-card .overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(26,10,46,0.8) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    display: flex;
-    align-items: flex-end;
-    padding: 1.5rem;
-  }
+  .photo-card .overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,10,46,0.8) 0%, transparent 60%); opacity: 0; transition: opacity 0.4s ease; display: flex; align-items: flex-end; padding: 1.5rem; }
   .photo-card:hover .overlay { opacity: 1; }
-  .overlay-text {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.5rem;
-    color: var(--gold);
-  }
+  .overlay-text { font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: var(--gold); }
 
-  /* Message Section */
-  #message {
-    position: relative;
-    z-index: 2;
-    padding: 6rem 2rem;
-    text-align: center;
-    background: linear-gradient(180deg, #0f051e 0%, #1a0a2e 100%);
-  }
+  #message { position: relative; z-index: 2; padding: 6rem 2rem; text-align: center; background: linear-gradient(180deg, #0f051e 0%, #1a0a2e 100%); }
+  .message-box { max-width: 800px; margin: 0 auto; position: relative; padding: 3rem; }
+  .message-box::before { content: '"'; position: absolute; top: -1rem; left: 1rem; font-family: 'Playfair Display', serif; font-size: 8rem; color: rgba(245,200,66,0.15); line-height: 1; }
+  .message-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 3vw, 1.7rem); font-style: italic; line-height: 1.9; color: rgba(255,248,240,0.9); margin-bottom: 2rem; }
+  .message-highlight { color: var(--gold); font-weight: 600; }
 
-  .message-box {
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-    padding: 3rem;
-  }
-  .message-box::before {
-    content: '"';
-    position: absolute;
-    top: -1rem; left: 1rem;
-    font-family: 'Playfair Display', serif;
-    font-size: 8rem;
-    color: rgba(245,200,66,0.15);
-    line-height: 1;
-  }
-
-  .message-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.2rem, 3vw, 1.7rem);
-    font-style: italic;
-    line-height: 1.9;
-    color: rgba(255,248,240,0.9);
-    margin-bottom: 2rem;
-  }
-
-  .message-highlight {
-    color: var(--gold);
-    font-weight: 600;
-  }
-
-  .wishes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    max-width: 900px;
-    margin: 3rem auto;
-  }
-
-  .wish-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(245,200,66,0.2);
-    border-radius: 16px;
-    padding: 2rem 1.5rem;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  .wish-card::after {
-    content: '';
-    position: absolute;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: radial-gradient(circle, rgba(245,200,66,0.05) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
+  .wishes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; max-width: 900px; margin: 3rem auto; }
+  .wish-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(245,200,66,0.2); border-radius: 16px; padding: 2rem 1.5rem; transition: all 0.3s ease; position: relative; overflow: hidden; }
+  .wish-card::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(245,200,66,0.05) 0%, transparent 70%); opacity: 0; transition: opacity 0.4s ease; }
   .wish-card:hover::after { opacity: 1; }
-  .wish-card:hover {
-    border-color: rgba(245,200,66,0.5);
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(26,10,46,0.5);
-  }
+  .wish-card:hover { border-color: rgba(245,200,66,0.5); transform: translateY(-5px); box-shadow: 0 15px 40px rgba(26,10,46,0.5); }
   .wish-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-  .wish-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    color: var(--gold);
-    margin-bottom: 0.5rem;
-  }
-  .wish-desc {
-    font-size: 0.95rem;
-    color: rgba(255,255,255,0.6);
-    line-height: 1.6;
-  }
+  .wish-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold); margin-bottom: 0.5rem; }
+  .wish-desc { font-size: 0.95rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
 
-  /* Connect Section */
-  #connect {
-    position: relative;
-    z-index: 2;
-    padding: 5rem 2rem;
-    background: linear-gradient(180deg, #1a0a2e 0%, #0d0618 100%);
-    text-align: center;
-  }
-
-  .connect-buttons {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 2.5rem;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    padding: 1rem 2.5rem;
-    border-radius: 50px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    letter-spacing: 0.1em;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  .btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
+  #connect { position: relative; z-index: 2; padding: 5rem 2rem; background: linear-gradient(180deg, #1a0a2e 0%, #0d0618 100%); text-align: center; }
+  .connect-buttons { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem; }
+  .btn { display: inline-flex; align-items: center; gap: 0.7rem; padding: 1rem 2.5rem; border-radius: 50px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; letter-spacing: 0.1em; text-decoration: none; transition: all 0.3s ease; position: relative; overflow: hidden; }
+  .btn::before { content: ''; position: absolute; inset: 0; opacity: 0; transition: opacity 0.3s ease; }
   .btn:hover::before { opacity: 0.1; }
   .btn:hover { transform: translateY(-3px); }
-
-  .btn-instagram {
-    background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
-    color: white;
-    box-shadow: 0 8px 30px rgba(131,58,180,0.4);
-  }
+  .btn-instagram { background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%); color: white; box-shadow: 0 8px 30px rgba(131,58,180,0.4); }
   .btn-instagram:hover { box-shadow: 0 12px 40px rgba(131,58,180,0.6); }
-
-  .btn-whatsapp {
-    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-    color: white;
-    box-shadow: 0 8px 30px rgba(37,211,102,0.4);
-  }
+  .btn-whatsapp { background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white; box-shadow: 0 8px 30px rgba(37,211,102,0.4); }
   .btn-whatsapp:hover { box-shadow: 0 12px 40px rgba(37,211,102,0.6); }
 
-  /* Cake Section */
-  #cake {
-    position: relative;
-    z-index: 2;
-    padding: 4rem 2rem;
-    text-align: center;
-    background: #0d0618;
-  }
+  #cake { position: relative; z-index: 2; padding: 4rem 2rem; text-align: center; background: #0d0618; }
+  .cake-emoji { font-size: 6rem; animation: float 2s ease-in-out infinite; display: inline-block; }
+  .final-wish { font-family: 'Dancing Script', cursive; font-size: clamp(2rem, 6vw, 4rem); background: linear-gradient(135deg, var(--gold), var(--rose)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 1rem 0; }
 
-  .cake-emoji {
-    font-size: 6rem;
-    animation: float 2s ease-in-out infinite;
-    display: inline-block;
-  }
+  .confetti-piece { position: fixed; width: 10px; height: 10px; border-radius: 2px; pointer-events: none; z-index: 100; animation: confettiFall var(--cf-d, 3s) ease-in forwards; }
+  @keyframes confettiFall { 0% { transform: translateY(-20px) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
 
-  .age-display {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(4rem, 15vw, 10rem);
-    font-weight: 900;
-    color: transparent;
-    -webkit-text-stroke: 2px var(--gold);
-    opacity: 0.3;
-    line-height: 1;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-  }
-
-  .final-wish {
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(2rem, 6vw, 4rem);
-    background: linear-gradient(135deg, var(--gold), var(--rose));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin: 1rem 0;
-  }
-
-  /* Confetti burst */
-  .confetti-piece {
-    position: fixed;
-    width: 10px; height: 10px;
-    border-radius: 2px;
-    pointer-events: none;
-    z-index: 100;
-    animation: confettiFall var(--cf-d, 3s) ease-in forwards;
-  }
-  @keyframes confettiFall {
-    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-  }
-
-  /* Lightbox */
-  .lightbox {
-    position: fixed;
-    inset: 0;
-    background: rgba(13,6,24,0.95);
-    z-index: 1000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-  }
+  .lightbox { position: fixed; inset: 0; background: rgba(13,6,24,0.95); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 2rem; }
   .lightbox.active { display: flex; }
-  .lightbox img {
-    max-width: 90vw;
-    max-height: 85vh;
-    border-radius: 12px;
-    border: 2px solid rgba(245,200,66,0.3);
-  }
-  .lightbox-close {
-    position: absolute;
-    top: 1.5rem; right: 1.5rem;
-    color: var(--gold);
-    font-size: 2.5rem;
-    cursor: pointer;
-    background: none;
-    border: none;
-    line-height: 1;
-  }
+  .lightbox img { max-width: 90vw; max-height: 85vh; border-radius: 12px; border: 2px solid rgba(245,200,66,0.3); }
+  .lightbox-close { position: absolute; top: 1.5rem; right: 1.5rem; color: var(--gold); font-size: 2.5rem; cursor: pointer; background: none; border: none; line-height: 1; }
 
-  /* Footer */
-  footer {
-    position: relative;
-    z-index: 2;
-    padding: 2rem;
-    text-align: center;
-    border-top: 1px solid rgba(245,200,66,0.1);
-    background: #0d0618;
-    color: rgba(255,255,255,0.3);
-    font-size: 0.85rem;
-    letter-spacing: 0.2em;
-  }
+  footer { position: relative; z-index: 2; padding: 2rem; text-align: center; border-top: 1px solid rgba(245,200,66,0.1); background: #0d0618; color: rgba(255,255,255,0.3); font-size: 0.85rem; letter-spacing: 0.2em; }
   footer span { color: var(--rose); }
 
   @media (max-width: 600px) {
-    .gallery-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
     .photo-card:nth-child(1) { grid-column: span 2; }
     .photo-card:nth-child(4) { grid-row: span 1; }
   }
@@ -548,20 +145,14 @@
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-dot" id="cursorDot"></div>
-
-<!-- Stars -->
 <div class="stars" id="stars"></div>
-
-<!-- Petals -->
 <div class="petals-container" id="petals"></div>
 
-<!-- Lightbox -->
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" onclick="closeLightbox()">×</button>
   <img id="lightbox-img" src="" alt="">
 </div>
 
-<!-- HERO -->
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="crown-icon">👑</div>
@@ -575,7 +166,6 @@
   </div>
 </section>
 
-<!-- GALLERY -->
 <section id="gallery">
   <div class="section-title">
     <h2>A Beautiful Soul</h2>
@@ -610,7 +200,6 @@
   </div>
 </section>
 
-<!-- MESSAGE -->
 <section id="message">
   <div class="section-title">
     <h2>From the Heart</h2>
@@ -629,7 +218,6 @@
       bring you everything your heart desires and more. 🌹
     </p>
   </div>
-
   <div class="wishes-grid">
     <div class="wish-card">
       <div class="wish-icon">💖</div>
@@ -654,7 +242,6 @@
   </div>
 </section>
 
-<!-- CAKE + FINAL WISH -->
 <section id="cake">
   <div class="cake-emoji">🎂</div>
   <p class="final-wish">Many Many Happy Returns of the Day!</p>
@@ -672,7 +259,6 @@
   </button>
 </section>
 
-<!-- CONNECT -->
 <section id="connect">
   <div class="section-title">
     <h2>Connect with Shalni</h2>
@@ -696,7 +282,6 @@
 </footer>
 
 <script>
-  // Custom cursor
   const cursor = document.getElementById('cursor');
   const cursorDot = document.getElementById('cursorDot');
   document.addEventListener('mousemove', e => {
@@ -706,7 +291,6 @@
     cursorDot.style.top = e.clientY + 'px';
   });
 
-  // Generate stars
   const starsContainer = document.getElementById('stars');
   for (let i = 0; i < 200; i++) {
     const star = document.createElement('div');
@@ -720,7 +304,6 @@
     starsContainer.appendChild(star);
   }
 
-  // Generate petals
   const petalsContainer = document.getElementById('petals');
   const petalEmojis = ['🌸', '✨', '⭐', '💫', '🌺', '💖', '🌹', '✦'];
   for (let i = 0; i < 20; i++) {
@@ -734,9 +317,9 @@
     petalsContainer.appendChild(petal);
   }
 
-  // Lightbox
+  // ✅ FIXED: lightbox uses relative path (same folder as images)
   function openLightbox(src) {
-    document.getElementById('lightbox-img').src = '/mnt/user-data/uploads/' + src;
+    document.getElementById('lightbox-img').src = src;
     document.getElementById('lightbox').classList.add('active');
   }
   function closeLightbox() {
@@ -746,7 +329,6 @@
     if (e.target === this) closeLightbox();
   });
 
-  // Confetti
   function launchConfetti() {
     const colors = ['#f5c842','#e8748a','#9b59b6','#3498db','#2ecc71','#e74c3c','#f39c12'];
     for (let i = 0; i < 80; i++) {
@@ -765,7 +347,6 @@
     }
   }
 
-  // Auto confetti on load
   setTimeout(launchConfetti, 1500);
 </script>
 </body>
